@@ -4,5 +4,5 @@
 #$ -R y
 #$ -j y
 #$ -l h_rt=330:00:00
-time ./master.sh >alljobs_output
+time python master.py > fvsubber_output
 echo "Application ends at `date`"
