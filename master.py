@@ -18,7 +18,7 @@ runvalues=make_rundict('acadia_force_2d')
 dates['2011-10-30']='2011-12-11'
 dates['2011-08-12']='2011-11-03'
 
-#Change anything in defaultdic.py
+#Change anything in defaultdic.py (make sure a list is assigned)
 #For running a range of values assign the key a list to iterate over.
 #Warning: As many options as needed can be changed.
 #         This can result in alot of runs very quickly.
