@@ -195,18 +195,17 @@ def make_rundict(grid):
     #rv['OUT_START_DATE']                 =   ['2000-01-01 00:00:00']
 
 
-    if grid.contains('acadia_force'):
+    if 'acadia_force' in grid:
         rv['PROJECTION_REFERENCE']           =   ['proj=lcc +lon_0=-64.55880 +lat_0=41.84493 +lat_1=39.72147 +lat_2=43.96838']
-        if grid.contains('2d'):
+        if '2d' in grid:
             rv['EXTSTEP_SECONDS']                =   [0.5]
             rv['BOTTOM_ROUGHNESS_MINIMUM']       =   [0.0025]
-        if grid.contains('3d'):
+        if '3d' in grid:
             rv['EXTSTEP_SECONDS']                =   [0.5]
             rv['BOTTOM_ROUGHNESS_MINIMUM']       =   [0.015]
             rv['NC_VELOCITY']                    =   ['T']
             rv['NC_VERTICAL_VEL']                =   ['T']
             rv['OUT_VELOCITY_3D']                =   ['T']
-
 
 
 

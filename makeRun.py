@@ -1,15 +1,40 @@
 import sys
 import shutil
 import os
+from datetime import datetime,timedelta
 
 
+def build_name(runvalues,looplist,dates,date):
+    changes=[]
+    name_changes=[]
+    for i,key in enumerate(runvalues):
+        if len(runvalues[key])>1:
+            changes+=[i]
+            name_changes+=[key]
 
-def copy_create(runvalues,othervalues,dates)
+    mystr=''
+    for val in changes:
+        mystr+='_'+str(looplist[val])
+    foldername=date+'_'+dates[date]+mystr
+
+    return foldername,name_changes
 
 
-    #shutil.copytree(filepath+"smallcape_force_2d_clean", filepath+("%s"%start_dates[timenum])+"_"+ ("%s"%end_dates[timenum]) )
+def copy_create(runvalues,looplist,dates,date,copypath,outpath):
+    
+    #add slashes to path if they were not included
+    if copypath[-1]!='/':
+        copypath+='/'
+    if outpath[-1]!='/':
+        outpath+='/'
 
-    #writecode to handle date stuff
+
+    foldername,name_changes=build_name(runvalues,looplist,dates,date)
+    shutil.copytree(copypath+runvalues['CASE_TITLE'], outpath+foldername )
+
+    #remove 3days for spin up
+    startdate_num=datetime.strptime(date,"%Y-%m-%d")-timedelta(days=3)
+    startdate=datetime.strftime(startdate_num,"%Y-%m-%d")
 
 
     top = '''
@@ -233,16 +258,25 @@ def copy_create(runvalues,othervalues,dates)
     OUT_START_DATE              = '{}'
      /
 
-    '''.format(gridName, start_dates[timenum], end_dates[timenum],drag_list[drag])
-
+    '''.format(looplist[0:3],startdate,dates[date],looplist[3:23],date,looplist[23:],date)
     #change format to add all values
 
     top = top.split('\n')
 
-    #fix the save location
-    outputFile = filepath+drag_list[drag]+"_"+("%s"%start_dates[timenum])+"_"+ ("%s"%end_dates[timenum])+"/{0}_run.nml".format(gridName)
+    #save run folder
+    outputFile = outpath+foldername+"/{0}_run.nml".format(gridName)
     print outputFile
     with open(outputFile, 'w') as f:
         for t in top:
             print >> {}, t
+
+    #save file with variables changed
+    outputFile2 = outpath+foldername+"/variables_changed"
+    print outputFile
+    with open(outputFile2, 'w') as f:
+        for item in name_changes:
+            print >> {}, item
+
+    return foldername
+
 
