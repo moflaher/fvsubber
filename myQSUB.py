@@ -8,6 +8,10 @@ import os
 
 def pyqsub(outpath,foldername):
 
+    #add slash to path if they were not included
+    if outpath[-1]!='/':
+        outpath+='/'
+
     os.chdir(outpath+foldername)
     commandQsub = subprocess.check_output(['qsub', 'RUN_PAR2.sh'])
 

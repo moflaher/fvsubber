@@ -22,7 +22,7 @@ def build_name(runvalues,looplist,dates,date):
 
 def copy_create(runvalues,looplist,dates,date,copypath,outpath):
     
-    #add slashes to path if they were not included
+    #add slashes to paths if they were not included
     if copypath[-1]!='/':
         copypath+='/'
     if outpath[-1]!='/':
@@ -30,12 +30,20 @@ def copy_create(runvalues,looplist,dates,date,copypath,outpath):
 
 
     foldername,name_changes=build_name(runvalues,looplist,dates,date)
-    shutil.copytree(copypath+runvalues['CASE_TITLE'], outpath+foldername )
+    
+    print outpath+foldername
+
+    try:
+        shutil.copytree(copypath+runvalues['CASE_TITLE'][0], outpath+foldername )
+    except OSError:
+        print 'Bad file path or File already exists - Attempting next case.'
+        return False
 
     #remove 3days for spin up
     startdate_num=datetime.strptime(date,"%Y-%m-%d")-timedelta(days=3)
     startdate=datetime.strftime(startdate_num,"%Y-%m-%d")
 
+    formattuple=looplist[0:3]+tuple([startdate])+tuple([dates[date]])+looplist[3:23]+tuple([date])+looplist[23:]+tuple([date])
 
     top = '''
      !================================================================!
@@ -72,8 +80,8 @@ def copy_create(runvalues,looplist,dates,date,copypath,outpath):
      /
 
      &NML_IO
-     INPUT_DIR       =  './input/'
-     OUTPUT_DIR      =  './output'
+     INPUT_DIR       = '{}'
+     OUTPUT_DIR      = '{}'
      IREPORT         = {},
      VISIT_ALL_VARS  = {},
      WAIT_FOR_VISIT  = {},
@@ -258,24 +266,21 @@ def copy_create(runvalues,looplist,dates,date,copypath,outpath):
     OUT_START_DATE              = '{}'
      /
 
-    '''.format(looplist[0:3],startdate,dates[date],looplist[3:23],date,looplist[23:],date)
-    #change format to add all values
+    '''.format(*formattuple)
 
     top = top.split('\n')
 
     #save run folder
-    outputFile = outpath+foldername+"/{0}_run.nml".format(gridName)
-    print outputFile
+    outputFile = outpath+foldername+"/{0}_run.nml".format(runvalues['CASE_TITLE'][0])
     with open(outputFile, 'w') as f:
         for t in top:
-            print >> {}, t
+            print >> f, t
 
     #save file with variables changed
     outputFile2 = outpath+foldername+"/variables_changed"
-    print outputFile
     with open(outputFile2, 'w') as f:
         for item in name_changes:
-            print >> {}, item
+            print >> f, item
 
     return foldername
 
