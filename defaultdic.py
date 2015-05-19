@@ -195,9 +195,19 @@ def make_rundict(grid):
     #rv['OUT_START_DATE']                 =   ['2000-01-01 00:00:00']
 
 
-    if grid=='smallcape_force':
+    if grid.contains('acadia_force'):
         rv['PROJECTION_REFERENCE']           =   ['proj=lcc +lon_0=-64.55880 +lat_0=41.84493 +lat_1=39.72147 +lat_2=43.96838']
-        rv['EXTSTEP_SECONDS']                =   [0.5]
+        if grid.contains('2d'):
+            rv['EXTSTEP_SECONDS']                =   [0.5]
+            rv['BOTTOM_ROUGHNESS_MINIMUM']       =   [0.0025]
+        if grid.contains('3d'):
+            rv['EXTSTEP_SECONDS']                =   [0.5]
+            rv['BOTTOM_ROUGHNESS_MINIMUM']       =   [0.015]
+            rv['NC_VELOCITY']                    =   ['T']
+            rv['NC_VERTICAL_VEL']                =   ['T']
+            rv['OUT_VELOCITY_3D']                =   ['T']
+
+
 
 
 

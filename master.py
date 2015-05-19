@@ -2,10 +2,18 @@ from defaultdic import make_rundict
 from makeRun import copy_create
 from myQSUB import pyqsub
 from itertools import product
+import sys
+import collections
 
-runvalues,othervalues=make_rundict('smallcape_force')
+dates=collections.OrderedDict()
+arguments = sys.argv
+copypath = arguments[1]
 
-dates=['somedate stuff here, figureout structure']
+
+runvalues=make_rundict('acadia_force_2d')
+dates['2011-10-30']='2011-12-11'
+dates['2011-08-12']='2011-11-03'
+
 #also changes any default runvalues here!!!!
 
 
