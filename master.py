@@ -1,7 +1,6 @@
 from defaultdic import make_rundict
 from makeRun import copy_create
-
-#from myQSUB import pyqsub
+from myQSUB import pyqsub
 from itertools import product
 import sys
 import collections
