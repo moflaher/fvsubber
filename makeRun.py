@@ -43,7 +43,7 @@ def copy_create(runvalues,looplist,dates,date,copypath,outpath):
     startdate_num=datetime.strptime(date,"%Y-%m-%d")-timedelta(days=3)
     startdate=datetime.strftime(startdate_num,"%Y-%m-%d")
 
-    formattuple=looplist[0:3]+tuple([startdate])+tuple([dates[date]])+looplist[3:23]+tuple([date])+looplist[23:]+tuple([date])
+    formattuple=looplist[0:3]+tuple([startdate])+tuple([dates[date]])+looplist[3:23]+tuple([date])+looplist[23:26]+tuple([date])+looplist[26:]+tuple([date])
 
     top = '''
      !================================================================!
@@ -118,7 +118,7 @@ def copy_create(runvalues,looplist,dates,date,copypath,outpath):
      NC_WIND_STRESS  = {},
      NC_EVAP_PRECIP  = {},
      NC_SURFACE_HEAT = {},
-     NC_GROUNDWATER  = F
+     NC_GROUNDWATER  = {}
      /
 
      &NML_NETCDF_AV
@@ -161,6 +161,7 @@ def copy_create(runvalues,looplist,dates,date,copypath,outpath):
      BOTTOM_ROUGHNESS_LENGTHSCALE    = {}
      BOTTOM_ROUGHNESS_KIND           = '{}'
      BOTTOM_ROUGHNESS_TYPE           = '{}'
+     BOTTOM_ROUGHNESS_FILE           = '{}'
      CONVECTIVE_OVERTURNING          = {},
      SCALAR_POSITIVITY_CONTROL       = {},
      BAROTROPIC                      = {},
@@ -263,7 +264,7 @@ def copy_create(runvalues,looplist,dates,date,copypath,outpath):
     OUT_SALT_TEMP               = {},
     OUT_WIND_VELOCITY           = {},
     OUT_INTERVAL                = '{}',
-    OUT_START_DATE              = '{}'
+    OUT_START_DATE              = '{} 00:00:00'
      /
 
     '''.format(*formattuple)

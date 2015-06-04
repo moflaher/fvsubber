@@ -30,7 +30,7 @@ for date in dates:
     for i,looplist in enumerate(product(*masterlist)):         
         foldername=copy_create(runvalues,looplist,dates,date,copypath,outpath)
         if foldername!=False:
-            pyqsub(outpath,foldername)
+            pyqsub(outpath,foldername,False)
 
 
         

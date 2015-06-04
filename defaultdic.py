@@ -32,7 +32,7 @@ def make_rundict(grid):
     rv['USE_MPI_IO_MODE']                =   ['F']
 
     #&NML_INTEGRATION
-    rv['EXTSTEP_SECONDS']                =   [0.01]
+    rv['EXTSTEP_SECONDS']                =   [1.0]
     rv['ISPLIT']                         =   [1]
     rv['IRAMP']                          =   [34560]
     rv['MIN_DEPTH']                      =   [0.5]
@@ -101,6 +101,7 @@ def make_rundict(grid):
     rv['BOTTOM_ROUGHNESS_LENGTHSCALE']   =   [0.001]
     rv['BOTTOM_ROUGHNESS_KIND']          =   ['constant']
     rv['BOTTOM_ROUGHNESS_TYPE']          =   ['orig']
+    rv['BOTTOM_ROUGHNESS_FILE']          =   [grid+'_brf.nc']
     rv['CONVECTIVE_OVERTURNING']         =   ['F']
     rv['SCALAR_POSITIVITY_CONTROL']      =   ['T']
     rv['BAROTROPIC']                     =   ['T']
@@ -206,6 +207,20 @@ def make_rundict(grid):
             rv['NC_VELOCITY']                    =   ['T']
             rv['NC_VERTICAL_VEL']                =   ['T']
             rv['OUT_VELOCITY_3D']                =   ['T']
+
+
+    if 'acadia_BoF' in grid:
+        rv['PROJECTION_REFERENCE']           =   ['proj=lcc +lon_0=-64.55880 +lat_0=41.84492 +lat_1=39.72147 +lat_2=43.96838']
+        rv['EXTSTEP_SECONDS']                =   [1.0]
+        rv['BOTTOM_ROUGHNESS_MINIMUM']       =   [0.0025]
+        if '3d' in grid:
+            rv['EXTSTEP_SECONDS']                =   [0.5]
+            rv['BOTTOM_ROUGHNESS_MINIMUM']       =   [0.015]
+            rv['NC_VELOCITY']                    =   ['T']
+            rv['NC_VERTICAL_VEL']                =   ['T']
+            rv['OUT_VELOCITY_3D']                =   ['T']
+
+
 
 
 
